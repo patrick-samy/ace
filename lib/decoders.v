@@ -5,7 +5,7 @@ module decoder_2x4(input[1:0]  in,
     wire neg_in_1;
 
     nor (out[0], in[0], in[1]);
-   
+
     not (neg_in_1, in[1]);
     and (out[1], in[0], neg_in_1);
 

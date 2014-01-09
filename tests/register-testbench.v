@@ -1,4 +1,4 @@
-module register_tb;
+module register_testbench;
 
     reg[31:0]  value;
     wire[31:0] out;

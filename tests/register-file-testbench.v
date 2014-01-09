@@ -1,4 +1,4 @@
-module register_file_tb;
+module register_file_testbench;
 
     reg[1:0]   read_register_port_0;
     reg[1:0]   write_register;

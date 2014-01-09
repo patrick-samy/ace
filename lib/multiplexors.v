@@ -1,15 +1,16 @@
-module multiplexor_2x1(input        control,
-                       input[31:0]  in0,
-                       input[31:0]  in1,
-                       output[31:0] out);
+module multiplexor_2x1#(parameter BIT_WIDTH = 32)
+                       (input                   control,
+                        input[BIT_WIDTH - 1:0]  in0,
+                        input[BIT_WIDTH - 1:0]  in1,
+                        output[BIT_WIDTH - 1:0] out);
 
-    wire       neg_control;
-    wire[31:0] out0;
-    wire[31:0] out1;
-    genvar     i;
+    wire                  neg_control;
+    wire[BIT_WIDTH - 1:0] out0;
+    wire[BIT_WIDTH - 1:0] out1;
+    genvar                i;
 
     not (neg_control, control);
-    
+
     generate
         for (i = 0; i < 32; i = i + 1)
         begin : mux_bit
@@ -21,15 +22,15 @@ module multiplexor_2x1(input        control,
 
 endmodule
 
-module multiplexor_4x1(input[1:0]   control,
-                       input[31:0]  in0,
-                       input[31:0]  in1,
-                       input[31:0]  in2,
-                       input[31:0]  in3,
-                       output[31:0] out);
+module multiplexor_4x1(input[1:0]              control,
+                       input[BIT_WIDTH - 1:0]  in0,
+                       input[BIT_WIDTH - 1:0]  in1,
+                       input[BIT_WIDTH - 1:0]  in2,
+                       input[BIT_WIDTH - 1:0]  in3,
+                       output[BIT_WIDTH - 1:0] out);
 
-    wire[31:0] multiplexor0_out;
-    wire[31:0] multiplexor1_out;
+    wire[BIT_WIDTH - 1:0] multiplexor0_out;
+    wire[BIT_WIDTH - 1:0] multiplexor1_out;
 
     multiplexor_2x1 multiplexor0(control[0], in0, in1, multiplexor0_out);
     multiplexor_2x1 multiplexor1(control[0], in2, in3, multiplexor1_out);

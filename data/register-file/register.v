@@ -1,12 +1,13 @@
-module register(input[31:0]  in,
-                input        set,
-                output[31:0] out);
+module register#(parameter BIT_WIDTH = 32)
+                (input[BIT_WIDTH - 1:0]   in,
+                 input                    set,
+                 output[BIT_WIDTH - 1: 0] out);
 
     genvar i;
 
     generate
-        for (i = 0; i < 32; i = i + 1)
-        begin : d_flipflop
+        for (i = 0; i < BIT_WIDTH; i = i + 1)
+        begin : generic_register
             wire not_d;
             wire q0;
             wire not_q0;
@@ -14,7 +15,7 @@ module register(input[31:0]  in,
 
             nand (q0, in[i], set);
 
-            not (not_d, in[i]);
+            not  (not_d, in[i]);
             nand (not_q0, not_d, set);
 
             nand (out[i], q0, not_q);

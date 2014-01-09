@@ -18,39 +18,35 @@ module full_adder(input  a,
 
 endmodule
 
-module xor_with(input[7:0]  a,
-                input       b,
-                output[7:0] out);
+module arithmetic_adder#(parameter BIT_WIDTH = 32)
+                        (input[BIT_WIDTH - 1:0]  a,
+                         input[BIT_WIDTH - 1:0]  b,
+                         input                   sub_mode,
+                         output[BIT_WIDTH - 1:0] sum,
+                         output                  carry);
 
-    xor (out[0], a[0], b);
-    xor (out[1], a[1], b);
-    xor (out[2], a[2], b);
-    xor (out[3], a[3], b);
-    xor (out[4], a[4], b);
-    xor (out[5], a[5], b);
-    xor (out[6], a[6], b);
-    xor (out[7], a[7], b);
+    genvar                i;
+    wire[BIT_WIDTH - 1:0] b0;
+    wire[BIT_WIDTH - 2:0] carries;
 
-endmodule
+    generate
+        for (i = 0; i < BIT_WIDTH; i = i + 1)
+        begin : xor_1x1
+            xor (b0[i], b[i], sub_mode);
+        end
+    endgenerate
 
-module add_sub(input[7:0]  a,
-               input[7:0]  b,
-               input       sub_mode,
-               output[7:0] sum,
-               output      carry);
+    full_adder fadder_0(a[0], b0[0], sub_mode, sum[0], carries[0]);
 
-    wire[7:0] b0;
-    wire[6:0] carries;
+    generate
+        for (i = 1; i < BIT_WIDTH - 1; i = i + 1)
+        begin : full_adder
+            full_adder fadder_i(a[i], b0[i], carries[i - 1],
+                                sum[i], carries[i]);
+        end
+    endgenerate
 
-    xor_with xor_b(b, sub_mode, b0);
-
-    full_adder fadder0(a[0], b0[0], sub_mode, sum[0], carries[0]);
-    full_adder fadder1(a[1], b0[1], carries[0], sum[1], carries[1]);
-    full_adder fadder2(a[2], b0[2], carries[1], sum[2], carries[2]);
-    full_adder fadder3(a[3], b0[3], carries[2], sum[3], carries[3]);
-    full_adder fadder4(a[4], b0[4], carries[3], sum[4], carries[4]);
-    full_adder fadder5(a[5], b0[5], carries[4], sum[5], carries[5]);
-    full_adder fadder6(a[6], b0[6], carries[5], sum[6], carries[6]);
-    full_adder fadder7(a[7], b0[7], carries[6], sum[7], carry);
+    full_adder fadder_31(a[BIT_WIDTH - 1], b0[BIT_WIDTH - 1],
+                         carries[BIT_WIDTH - 2], sum[BIT_WIDTH - 1], carry);
 
 endmodule

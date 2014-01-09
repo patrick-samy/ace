@@ -1,4 +1,4 @@
-module add_sub_tb;
+module add_sub_testbench;
 
     reg  a;
     reg  b;
