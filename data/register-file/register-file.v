@@ -10,14 +10,14 @@ module register_file(input[1:0]   read_register_port_0,
     wire[31:0] mux_in1;
     wire[31:0] mux_in2;
     wire[31:0] mux_in3;
-    wire[3:0]  dec_out;
+    wire[3:0]  decoder_out;
     wire[3:0]  write_enabled_register;
 
-    decoder_2x4 dec_write_register(write_register, dec_out);
-    and (write_enabled_register[0], write_enable, dec_out[0]);
-    and (write_enabled_register[1], write_enable, dec_out[1]);
-    and (write_enabled_register[2], write_enable, dec_out[2]);
-    and (write_enabled_register[3], write_enable, dec_out[3]);
+    decoder_2x4 dec_write_register(write_register, decoder_out);
+    and (write_enabled_register[0], write_enable, decoder_out[0]);
+    and (write_enabled_register[1], write_enable, decoder_out[1]);
+    and (write_enabled_register[2], write_enable, decoder_out[2]);
+    and (write_enabled_register[3], write_enable, decoder_out[3]);
 
     register r0(write_data, write_enabled_register[0], mux_in0);
     register r1(write_data, write_enabled_register[1], mux_in1);

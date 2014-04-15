@@ -22,12 +22,13 @@ module multiplexor_2x1#(parameter BIT_WIDTH = 32)
 
 endmodule
 
-module multiplexor_4x1(input[1:0]              control,
-                       input[BIT_WIDTH - 1:0]  in0,
-                       input[BIT_WIDTH - 1:0]  in1,
-                       input[BIT_WIDTH - 1:0]  in2,
-                       input[BIT_WIDTH - 1:0]  in3,
-                       output[BIT_WIDTH - 1:0] out);
+module multiplexor_4x1#(parameter BIT_WIDTH = 32)
+                       (input[1:0]              control,
+                        input[BIT_WIDTH - 1:0]  in0,
+                        input[BIT_WIDTH - 1:0]  in1,
+                        input[BIT_WIDTH - 1:0]  in2,
+                        input[BIT_WIDTH - 1:0]  in3,
+                        output[BIT_WIDTH - 1:0] out);
 
     wire[BIT_WIDTH - 1:0] multiplexor0_out;
     wire[BIT_WIDTH - 1:0] multiplexor1_out;

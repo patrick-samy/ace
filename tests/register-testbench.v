@@ -9,12 +9,12 @@ module register_testbench;
     initial
     begin
         $monitor("value=%d set=%b out=%d", value, set, out);
-        assign value = 'd42;
-    #0  assign set = 0;
-    #1  assign set = 1;
-    #2  assign set = 0;
-    #5  assign value = 'd21;
-    #10 assign set = 1;
+    #0  value = 'd42;
+    #0  set = 0;
+    #1  set = 1;
+    #1  set = 0;
+    #1  value = 'd21;
+    #1  set = 1;
     end
 
 endmodule
